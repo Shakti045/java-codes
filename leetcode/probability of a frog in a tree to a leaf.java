@@ -42,26 +42,37 @@ public class Shakti {
 //        }
   }
   static double ans=1;
-  public static void findprobability(int source,int dest,ArrayList<Node>[] graph){
+  static int time =0;
+  public static double findprobability(int source,int dest,ArrayList<Node>[] graph){
       if(source==dest){
-          System.out.println(ans);
-          return;
+
+          return ans;
 
       }
 
       ans=ans* (1/child[source]);
+      time++;
       for(int i=0;i<graph[source].size();i++){
-          findprobability(graph[source].get(i).dest,dest,graph);
+          if(findprobability(graph[source].get(i).dest,dest,graph)!=0){
+              return ans;
+          }
 
       }
       ans=ans/(1/child[source]);
+      time--;
 
-
+return 0;
   }
     public static void main(String[] args) {
         ArrayList[] graph=new ArrayList[14];
         creategraph(graph);
         childcount(graph);
-         findprobability(0,10,graph);
+        int time_given=4;
+        double b=findprobability(0,9,graph);
+        if(time<=time_given){
+            System.out.println(b);
+        }else{
+            System.out.println("cant reach in given_time");
+        }
     }
 }
